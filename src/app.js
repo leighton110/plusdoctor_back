@@ -5,9 +5,14 @@ const route = require('./routes');
 const cors = require('cors');
 const sequelize = require('./models').sequelize;
 
-// sequelize.sync();
-sequelize.sync({ force: true });
-app.use(cors('*'));
+const corsOptions = {
+  origin: 'http://localhost:3000',
+  credentials: true,
+};
+sequelize.sync();
+// sequelize.sync({ force: true });
+
+app.use(cors(corsOptions));
 app.use(express.json());
 app.use(methodOverride());
 app.use('/', route);
