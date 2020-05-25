@@ -10,12 +10,15 @@ const sequelize = new Sequelize(config.database, config.username, config.passwor
 });
 
 // const Board = require("./Board")(sequelize, Sequelize);
-const User = require('./User')(sequelize, Sequelize);
 
 // db.Board = Board;
-db.User = User;
+db.User = require('./User')(sequelize, Sequelize);
+db.Doctor = require('./Doctor')(sequelize, Sequelize);
+db.Hospital = require('./Hospital')(sequelize, Sequelize);
+db.Subject = require('./Subject')(sequelize, Sequelize);
 
-// User.hasMany(Board, { foreignKey: 'author', sourceKey: 'id' });
+db.Hospital.hasMany(db.Doctor, { foreignKey: 'hospital', sourceKey: 'id' });
+db.Subject.hasMany(db.Doctor, { foreignKey: 'subject', sourceKey: 'id' });
 // Board.belongsTo(User, { foreignKey: 'author', targetKey: 'id' });
 
 db.sequelize = sequelize;

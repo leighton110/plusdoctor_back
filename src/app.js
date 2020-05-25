@@ -3,7 +3,10 @@ const methodOverride = require('method-override');
 const app = express();
 const route = require('./routes');
 const cors = require('cors');
+const sequelize = require('./models').sequelize;
 
+// sequelize.sync();
+sequelize.sync({ force: true });
 app.use(cors('*'));
 app.use(express.json());
 app.use(methodOverride());
