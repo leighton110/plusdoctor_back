@@ -39,7 +39,7 @@ const hospital = async (req, res, next) => {
       res.json({ result: '비밀번호 틀렸어' });
     }
   } catch (err) {
-    console.log(err);
+    next(err);
   }
 };
 
@@ -76,7 +76,9 @@ const user = async (req, res, next) => {
     } else {
       res.json({ result: '비밀번호 틀렸어' });
     }
-  } catch (err) {}
+  } catch (err) {
+    next(err);
+  }
 };
 
 module.exports = {

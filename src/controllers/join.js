@@ -26,19 +26,15 @@ const user = async (req, res, next) => {
     });
     res.json({ result: '회원가입성공' });
   } catch (err) {
-    next(err);
+    const error = new Error('회원가입실패');
+    next(error);
   }
 };
 
-//해야함
 const hospital = async (req, res, next) => {
   try {
     const { username, password, title, address, phone, operation_time } = req.body;
     const hashedPassword = await passwordToHash(password);
-    // await model.User.create({
-    //   ...req.body,
-    //   password: hashedPassword,
-    // });
     await model.Hospital.create({
       username,
       password: hashedPassword,
@@ -64,7 +60,9 @@ const duplicateCheck = async (req, res, next) => {
     } else {
       res.json({ result: '중복된 아이디입니다.' });
     }
-  } catch (err) {}
+  } catch (err) {
+    next(err);
+  }
 };
 
 module.exports = { user, hospital, duplicateCheck };
