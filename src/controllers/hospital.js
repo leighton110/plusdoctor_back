@@ -1,7 +1,6 @@
 const model = require('../models');
 
-const registerOne = async (req, res, next) => {
-  console.log('1');
+const registerDoctor = async (req, res, next) => {
   try {
     const { name, phone, subjectTitle } = req.body;
     const findUserId = req.findUserId;
@@ -25,4 +24,4 @@ const registerOne = async (req, res, next) => {
   }
 };
 
-module.exports = { registerOne };
+module.exports = { registerDoctor };
