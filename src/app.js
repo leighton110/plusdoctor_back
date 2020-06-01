@@ -6,6 +6,7 @@ const cors = require('cors');
 const cookieParser = require('cookie-parser');
 // const sequdbelize = require('./models').sequelize;
 const db = require('./models');
+const swaggerDoc = require('../swaggerDoc');
 const subjectList = [
   '내과',
   '안과',
@@ -27,6 +28,7 @@ const subjectList = [
   '정신건강의학과',
   '종합병원',
 ];
+const timeList = ['9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21'];
 //글쓰기
 const corsOptions = {
   origin: 'http://localhost:3000',
@@ -35,13 +37,14 @@ const corsOptions = {
 const init = async () => {
   await db.sequelize.sync();
   // await db.sequelize.sync({ force: true });
-  await initSubject();
+  // await initSubject();
+  // await initReservationTime();
   app.use(cors(corsOptions));
   app.use(express.json());
   app.use(methodOverride());
   app.use(cookieParser());
   app.use('/', route);
-
+  app.use('/api-docs', swaggerDoc);
   // 404에러
   app.use(function (req, res, next) {
     const err = new Error('Not Found');
@@ -71,6 +74,19 @@ const initSubject = async () => {
       },
       where: {
         title: subject,
+      },
+    });
+  }
+};
+
+const initReservationTime = async () => {
+  for (let time of timeList) {
+    await db.ReservationTime.findOrCreate({
+      defaults: {
+        time,
+      },
+      where: {
+        time,
       },
     });
   }
