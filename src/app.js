@@ -43,8 +43,8 @@ const init = async () => {
   app.use(express.json());
   app.use(methodOverride());
   app.use(cookieParser());
-  app.use('/', route);
   app.use('/api-docs', swaggerDoc);
+  app.use('/', route);
   // 404에러
   app.use(function (req, res, next) {
     const err = new Error('Not Found');
@@ -54,6 +54,7 @@ const init = async () => {
 
   //모든 에러처리
   app.use((err, req, res, next) => {
+    // err.statusCode = !err.statusCode ? 500 : err.statusCode;
     if (!err.statusCode) err.statusCode = 500;
     res.status(err.statusCode).json({
       statusCode: err.statusCode,

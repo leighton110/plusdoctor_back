@@ -1,5 +1,5 @@
-const bcrypt = require('bcryptjs');
 const model = require('../models');
+const bcrypt = require('bcryptjs');
 
 const passwordToHash = async (password) => {
   const genSalt = bcrypt.genSaltSync(10);
@@ -11,10 +11,6 @@ const user = async (req, res, next) => {
   try {
     const { username, password, name, phone, address, gender, age } = req.body;
     const hashedPassword = await passwordToHash(password);
-    // await model.User.create({
-    //   ...req.body,
-    //   password: hashedPassword,
-    // });
     await model.User.create({
       username,
       password: hashedPassword,
@@ -26,8 +22,7 @@ const user = async (req, res, next) => {
     });
     res.json({ result: '회원가입성공' });
   } catch (err) {
-    const error = new Error('회원가입실패');
-    next(error);
+    next(err);
   }
 };
 

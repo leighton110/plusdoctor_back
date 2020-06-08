@@ -1,11 +1,11 @@
 const model = require('../models');
-const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const config = require('../config/config')[process.env.NODE_ENV || 'development'];
 
 const jwtCheck = async (req, res, next) => {
-  // console.log(req.cookies);
+  //console.log(req.cookies);
   const authHeader = req.cookies['Authorization'];
+  //console.log(authHeader);
   if (authHeader) {
     const token = authHeader.replace('Bearer ', '');
     const { type, username } = jwt.verify(token, config.jwtSecretKey);

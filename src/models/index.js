@@ -19,6 +19,8 @@ db.ReservationTime = require('./ReservationTime')(sequelize, Sequelize);
 
 db.Hospital.hasMany(db.Doctor, { foreignKey: 'hospital', sourceKey: 'id' });
 db.Subject.hasMany(db.Doctor, { foreignKey: 'subject', sourceKey: 'id' });
+db.Doctor.belongsTo(db.Subject, { foreignKey: 'subject', as: 'Subject' });
+
 db.Hospital.hasMany(db.InquireBoard, { foreignKey: 'hospital', sourceKey: 'id' });
 db.Hospital.hasMany(db.ReviewBoard, { foreignKey: 'hospital', sourceKey: 'id' });
 db.User.hasMany(db.InquireBoard, { foreignKey: 'author', sourceKey: 'id' });
@@ -26,7 +28,7 @@ db.User.hasMany(db.ReviewBoard, { foreignKey: 'author', sourceKey: 'id' });
 db.Doctor.hasMany(db.Reservation, { foreignKey: 'doctor', sourceKey: 'id' });
 db.User.hasMany(db.Reservation, { foreignKey: 'patient', sourceKey: 'id' });
 // db.ReservationTime.hasMany(db.Reservation, { foreignKey: 'time', sourceKey: 'id' });
-db.Reservation.belongsToMany(db.Doctor, { through: 'id' });
+// db.Reservation.belongsToMany(db.Doctor, { through: 'id' });
 
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;

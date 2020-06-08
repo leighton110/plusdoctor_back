@@ -2,7 +2,10 @@ const express = require('express');
 const route = express.Router();
 const joinController = require('../controllers/join');
 
+//hospital 회원가입 api 경로
 route.post('/hospital', joinController.hospital);
+
+//user 회원가입 api 경로
 route.post('/user', joinController.user);
 
 module.exports = route;
